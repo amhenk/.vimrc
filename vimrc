@@ -1,6 +1,10 @@
-colorscheme elflord
-
+"Make vim nice
 execute pathogen#infect()
+
+syntax on
+filetype plugin indent on
+
+colorscheme elflord
 
 set background=dark
 
@@ -30,7 +34,6 @@ set report=0
 " Set folding to occur
 set foldmethod=indent
 set foldlevelstart=20
-
 
 " Keep a large undohistory
 set undolevels=2000
