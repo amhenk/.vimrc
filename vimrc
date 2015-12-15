@@ -6,17 +6,49 @@ filetype plugin indent on
 
 colorscheme elflord
 
+if has("autocmd")
+    filetype on
+    filetype indent on
+    filetype plugin on
+endif
+
+" Draws a line bar across the current line on the current window
+augroup BgHighlight
+    autocmd!
+    autocmd WinEnter * set cul
+    autocmd WinLeave * set nocul
+augroup END
+
 set background=dark
 
-" Need to fix, supposed to add C style comments to beginning of line
-let @c ='i// ^[^<80>kd^['
+" Colors for statusline
+hi User1 ctermbg=green ctermfg=white guibg=green guifg=red
+hi User2 ctermbg=green ctermfg=black guibg=green guifg=red
+
+" Set status line to be visible and show path
+set laststatus=2
+set statusline=%1*[%n]\ %2*%<%.99f%1*\ %h%w%m%r%y
+set statusline+=[ASCII=\\%03.3b/Hex=\\%02.2B] "Adds ASCII / Hex value of current character
+set statusline+=%=%-16(\ %l,%c-%v\ %)%p%%
+
+" Add tab in front of line
+let @a = '^i	^^€kd^'    
 
 " Remember, "noh" to turn off highlighting (ctrl-* to turn on)
 
+" Quick Load and Save sessions
+" Write session with F2
+map <leader>sv :mksession! ~/.vim/vim_session <cr>
+" Load session with F3
+map <leader>op :source ~/.vim/vim_session <cr> 
+
 " set auto indent
 set autoindent
-" turn line numbers on
+
+" line numbers on by default but let \l toggle them
 set number
+nnoremap <leader>l :set number!<CR>
+
 " make tab insert indents instead of tabs at the beginning of a line
 set smarttab
 " use spaces instead of tab character
@@ -51,6 +83,12 @@ if has('windows')
         set showtabline=1
     endif
 endif
+
+" Simplify window navigation
+nnoremap <C-J> <C-W><C-J>
+nnoremap <C-K> <C-W><C-K>
+nnoremap <C-L> <C-W><C-L>
+nnoremap <C-H> <C-W><C-H>
 
 " When wrapping, if a line is too long it adds the @ symbol in the left column
 " But this shows as much as possible but gets rid of the @ 
