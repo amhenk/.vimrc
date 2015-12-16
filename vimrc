@@ -121,3 +121,20 @@ if has('linebreak')
     nnoremap <silent> <leader>b:<C-U>call ToggleBreak()<CR>
     endif
 endif
+
+" Add N newlines with "N\o" or default 3 new lines
+function! OpenLines( nrlines, dir )
+    let nrlines = a:nrlines < 3 ? 3 : a:nrlines
+    let start = line('.') + a:dir
+    call append(start, repeat([''], nrlines))
+    if a:dir < 0
+        normal! 2k
+    else
+        normal! 2j
+    endif
+endfunction
+
+"Map to open multiple lines and enter insert mode
+nnoremap <leader>o :<C-u>call OpenLines(v:count, 0)<CR>S
+nnoremap <leader>O :<C-u>call OpenLines(v:count, -1)<CR>S
+
