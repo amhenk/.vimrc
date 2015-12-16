@@ -36,6 +36,11 @@ let @a = '^i	^^€kd^'
 
 " Remember, "noh" to turn off highlighting (ctrl-* to turn on)
 
+" Adds new line without entering insert mode
+" as well as maintain cursor location on line
+nmap <leader>] o<Esc>k
+nmap <leader>[ O<Esc>j
+
 " Quick Load and Save sessions
 " Write session with F2
 map <leader>sv :mksession! ~/.vim/vim_session <cr>
