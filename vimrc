@@ -4,7 +4,8 @@ execute pathogen#infect()
 syntax on
 filetype plugin indent on
 
-colorscheme elflord
+set background=dark
+colorscheme darkblue
 
 if has("autocmd")
     filetype on
@@ -19,8 +20,26 @@ augroup BgHighlight
     autocmd WinLeave * set nocul
 augroup END
 
-set background=dark
 
+" PATHOGEN PACKAGES -----------------------------------
+let g:NERDSpaceDelims = 1
+let g:NERDCompactSexyComs = 1
+
+" Open NerdTree when vim starts up on opening a directory
+autocmd StdinReadPre * let s:std_in=1
+autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | endif
+
+" Open NerdTree on vim enter
+autocmd vimenter * NERDTree
+
+map <C-n> :NERDTreeToggle<CR>
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+
+command NT NERDTree
+
+" -----------------------------------------------------
+
+set backspace=indent,eol,start
 " Colors for statusline
 hi User1 ctermbg=green ctermfg=white guibg=green guifg=red
 hi User2 ctermbg=green ctermfg=black guibg=green guifg=red
@@ -31,8 +50,6 @@ set statusline=%1*[%n]\ %2*%<%.99f%1*\ %h%w%m%r%y
 set statusline+=[ASCII=\\%03.3b/Hex=\\%02.2B] "Adds ASCII / Hex value of current character
 set statusline+=%=%-16(\ %l,%c-%v\ %)%p%%
 
-" Add tab in front of line
-let @a = '^i	^^€kd^'    
 
 " Remember, "noh" to turn off highlighting (ctrl-* to turn on)
 
