@@ -32,6 +32,9 @@ autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in
 " Open NerdTree on vim enter
 autocmd vimenter * NERDTree
 
+" Jump to the main Window instead of NERDTree
+autocmd vimenter * wincmd p
+
 map <C-n> :NERDTreeToggle<CR>
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
