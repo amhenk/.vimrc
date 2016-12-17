@@ -1,11 +1,25 @@
-"Make vim nice
-execute pathogen#infect()
+" ================================================
+" Author: Alex Henkemeier
+" ================================================
+
+" Check if pathogen is installed
+let s:infect_flag = 0
+runtime! autoload/pathogen.vim
+if exists("*pathogen#infect")
+    execute pathogen#infect()
+    let s:infect_flag = 1
+endif
 
 syntax on
 filetype plugin indent on
 
+" get all the colors
+set t_Co=256
 set background=dark
-colorscheme darkblue
+
+" custom theme 
+" Url:         https://github.com/sonph/onehalf
+colorscheme onehalfdark
 
 if has("autocmd")
     filetype on
@@ -16,36 +30,36 @@ endif
 " Draws a line bar across the current line on the current window
 augroup BgHighlight
     autocmd!
-    autocmd WinEnter * set cul
-    autocmd WinLeave * set nocul
+    autocmd WinEnter * set cul autocmd WinLeave * set nocul
 augroup END
 
 
 " PATHOGEN PACKAGES -----------------------------------
-let g:NERDSpaceDelims = 1
-let g:NERDCompactSexyComs = 1
+if s:infect_flag is 1
+    let g:NERDSpaceDelims = 1
+    let g:NERDCompactSexyComs = 1
 
-" Open NerdTree when vim starts up on opening a directory
-autocmd StdinReadPre * let s:std_in=1
-autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | endif
+    " Open NerdTree when vim starts up on opening a directory
+    autocmd StdinReadPre * let s:std_in=1
+    autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | endif
 
-" Open NerdTree on vim enter
-autocmd vimenter * NERDTree
+    " Open NerdTree on vim enter
+    autocmd vimenter * NERDTree
 
-" Jump to the main Window instead of NERDTree
-autocmd vimenter * wincmd p
+    " Jump to the main Window instead of NERDTree
+    autocmd vimenter * wincmd p
 
-map <C-n> :NERDTreeToggle<CR>
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+    map <C-n> :NERDTreeToggle<CR>
+    autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
-command NT NERDTree
-
+    command NT NERDTree
+endif
 " -----------------------------------------------------
 
 set backspace=indent,eol,start
 " Colors for statusline
-hi User1 ctermbg=green ctermfg=white guibg=green guifg=red
-hi User2 ctermbg=green ctermfg=black guibg=green guifg=red
+hi User1 ctermbg=046 ctermfg=white guibg=green guifg=red
+hi User2 ctermbg=046 ctermfg=black guibg=green guifg=red
 
 " Set status line to be visible and show path
 set laststatus=2
@@ -65,7 +79,7 @@ nmap <leader>[ O<Esc>j
 " Write session with F2
 map <leader>sv :mksession! ~/.vim/vim_session <cr>
 " Load session with F3
-map <leader>op :source ~/.vim/vim_session <cr> 
+map <leader>op :source ~/.vim/vim_session <cr>
 
 " set auto indent
 set autoindent
@@ -73,6 +87,17 @@ set autoindent
 " line numbers on by default but let \l toggle them
 set number
 nnoremap <leader>l :set number!<CR>
+
+" Line Number Color
+highlight LineNr ctermfg=darkgrey
+
+" F5 to remove trailing whitespace
+nnoremap <silent> <F5>
+            \ :let _s=@/ <Bar>
+            \ :%s/\s\+$//e <Bar>
+            \ :let @/=_s <Bar>
+            \ :nohl <Bar>
+            \ :unlet _s <CR>
 
 " make tab insert indents instead of tabs at the beginning of a line
 set smarttab
@@ -116,7 +141,7 @@ nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
 
 " When wrapping, if a line is too long it adds the @ symbol in the left column
-" But this shows as much as possible but gets rid of the @ 
+" But this shows as much as possible but gets rid of the @
 set display=lastline
 
 " Don't allow wrapping by default, but lets \w toggle it on
