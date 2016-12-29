@@ -13,6 +13,9 @@ endif
 syntax on
 filetype plugin indent on
 
+" set asm syntax to nasm cause it's prettier : ^)
+autocmd BufNewFile,BufRead *.asm set ft=nasm
+
 " get all the colors
 set t_Co=256
 set background=dark
