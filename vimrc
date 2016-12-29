@@ -19,7 +19,12 @@ set background=dark
 
 " custom theme 
 " Url:         https://github.com/sonph/onehalf
-colorscheme onehalfdark
+" Check if the colorscheme is installed
+try
+    colorscheme onehalfdark
+catch /^Vim\%((\a\+)\=:E185/
+    colorscheme darkblue
+endtry
 
 if has("autocmd")
     filetype on
@@ -30,7 +35,8 @@ endif
 " Draws a line bar across the current line on the current window
 augroup BgHighlight
     autocmd!
-    autocmd WinEnter * set cul autocmd WinLeave * set nocul
+    autocmd WinEnter * set cul
+    autocmd WinLeave * set nocul
 augroup END
 
 
