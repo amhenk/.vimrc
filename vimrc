@@ -13,8 +13,6 @@ endif
 syntax on
 filetype plugin indent on
 
-" set asm syntax to nasm cause it's prettier : ^)
-autocmd BufNewFile,BufRead *.asm set ft=nasm
 
 " get all the colors
 set t_Co=256
@@ -67,7 +65,7 @@ endif
 
 set backspace=indent,eol,start
 " Colors for statusline
-hi User1 ctermbg=046 ctermfg=white guibg=green guifg=red
+hi User1 ctermbg=046 ctermfg=236 guibg=green guifg=red
 hi User2 ctermbg=046 ctermfg=black guibg=green guifg=red
 
 " Set status line to be visible and show path
@@ -90,8 +88,6 @@ map <leader>sv :mksession! ~/.vim/vim_session <cr>
 " Load session with F3
 map <leader>op :source ~/.vim/vim_session <cr>
 
-" set auto indent
-set autoindent
 
 " line numbers on by default but let \l toggle them
 set number
@@ -108,6 +104,8 @@ nnoremap <silent> <F5>
             \ :nohl <Bar>
             \ :unlet _s <CR>
 
+" Tab and indentation shit ---------------------------
+
 " make tab insert indents instead of tabs at the beginning of a line
 set smarttab
 " use spaces instead of tab character
@@ -118,6 +116,14 @@ set shiftwidth=4
 set softtabstop=4
 " How many spaces to show for a literal tab
 set tabstop=4
+
+" set auto indent
+set autoindent
+
+" set asm syntax to nasm cause it's prettier : ^)
+autocmd BufNewFile,BufRead *.asm set ft=nasm
+
+" -----------------------------------------------------
 
 " Always report how many lines were modified
 set report=0
@@ -192,3 +198,13 @@ endfunction
 nnoremap <leader>o :<C-u>call OpenLines(v:count, 0)<CR>S
 nnoremap <leader>O :<C-u>call OpenLines(v:count, -1)<CR>S
 
+" Enable folding with spacebar
+nnoremap <space> za
+
+" Filetype specific
+augroup python
+    autocmd!
+    autocmd FileType python
+                \ syn keyword pythonSelf self
+                \ | highlight def link pythonSelf Number
+augroup end
