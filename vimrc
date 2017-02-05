@@ -1,6 +1,14 @@
 " ================================================
 " Author: Alex Henkemeier
 " ================================================
+" Repositories:
+"   https://github.com/sonph/onehalf
+"   https://github.com/w0rp/ale
+"   https://github.com/Valloric/YouCompleteMe
+"   https://github.com/scrooloose/nerdtree
+"   https://github.com/scrooloose/nerdcommenter
+"   https://github.com/eloquent/pathogen
+" ================================================
 
 " Check if pathogen is installed
 let s:infect_flag = 0
@@ -60,6 +68,8 @@ if s:infect_flag is 1
     autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
     command NT NERDTree
+
+    let g:ale_sign_column_always = 1
 endif
 " -----------------------------------------------------
 
@@ -72,6 +82,10 @@ hi User2 ctermbg=046 ctermfg=black guibg=green guifg=red
 set laststatus=2
 set statusline=%1*[%n]\ %2*%<%.99f%1*\ %h%w%m%r%y
 set statusline+=[ASCII=\\%03.3b/Hex=\\%02.2B] "Adds ASCII / Hex value of current character
+if s:infect_flag is 1
+    let g:ale_statusline_format=['X %d','/!\ %d', ' ok']
+    set statusline+=%{ALEGetStatusLine()}
+endif
 set statusline+=%=%-16(\ %l,%c-%v\ %)%p%%
 
 
