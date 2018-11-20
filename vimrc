@@ -84,7 +84,8 @@ set statusline=%1*[%n]\ %2*%<%.99f%1*\ %h%w%m%r%y
 set statusline+=[ASCII=\\%03.3b/Hex=\\%02.2B] "Adds ASCII / Hex value of current character
 if s:infect_flag is 1
     let g:ale_statusline_format=['X %d','/!\ %d', ' ok']
-    set statusline+=%{ALEGetStatusLine()}
+    " ALEGetStatusLine is deprecated
+    " set statusline+=%{ALEGetStatusLine()}
 endif
 set statusline+=%=%-16(\ %l,%c-%v\ %)%p%%
 

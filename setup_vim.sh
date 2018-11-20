@@ -21,14 +21,6 @@ if git --version 2>/dev/null; then
     cp onehalf/vim/colors/onehalfdark.vim ../colors/
 
     ##########################################
-    # Complete Me has compiled sections so I'll do this
-    ##########################################
-    git clone https://github.com/Valloric/YouCompleteMe
-    cd ./YouCompleteMe
-    git submodule update --init --recursive
-    ./install.py --all
-
-    ##########################################
     # Do the rest
     ##########################################
     cd $root_dir/vim/bundle
